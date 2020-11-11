@@ -26,7 +26,6 @@ int main() {
 				printf("Bye bye\n");
 				return 0;
 			default:
-				printf("entered %c\n", n);
 				printf("Wrong input, please try again\n");
 			}
 	}while((n != 'e') || (n != 'E'));

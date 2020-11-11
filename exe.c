@@ -12,12 +12,11 @@ void pictureManipulation()
 	do{
 		scanf("%d",&n);
 	}while(isspace(n) || n>4 || n<2);
-	int arr[n][n], temp[n][n];
+	int arr[n][n];
 	int *pointerArr = &arr[0][0];
-	int *pointertemp = &temp[0][0];
 	pointerArr = setArray(pointerArr,n);
 	printArr(pointerArr,n);
-	menu(pointerArr, pointertemp, n);
+	menu(pointerArr, n);
 }
 void numberGame()
 {

@@ -3,9 +3,12 @@
 
 void printArr(int* arr,int size);
 int* setArray(int* arr,int size);
-void menu(int* arr, int* temp, int size);
-int* moveByClockwise(int* arr,int* temp, int size);
-int* moveAgainstClock(int* arr,int* temp, int size);
+void menu(int* arr, int size);
+void selecting(int choose, int* arr, int size);
+int* moveByClockwise(int* arr, int size);
+int* moveAgainstClock(int* arr, int size);
+int* moveHorizontal(int* arr, int size);
+int* moveVertical(int* arr, int size);
 void swap(int* a, int* b);
 
 
