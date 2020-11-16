@@ -16,11 +16,11 @@ int main() {
 			{
 			case 'p': case 'P':
 				pictureManipulation();
-				printf("If you want to exit press the char N/e\n");
+				printf("If you want to exit press the char E/e\n");
 				break;
 			case 'n': case 'N':
 				numberGame();
-				printf("If you want to exit press the char N/e\n");
+				printf("If you want to exit press the char E/e\n");
 				break;
 			case 'e': case 'E':
 				printf("Bye bye\n");

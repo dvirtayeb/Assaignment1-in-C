@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include<time.h> 
 
 #include "functions.h"
 
@@ -15,14 +16,27 @@ void printArr(int* arr,int size)
 	}
 }
 
+void printMatrix(int* arr,int n,int m)
+{
+	for(int i=0; i<n;i++)
+	{
+	printf("{");
+	for(int j=0; j<m ; j++)
+		printf("%d ",*(arr+i*m+j));
+	printf("}\n");
+	}
+}
+
 int* setArray(int* arr,int size)
 {
+	srand(time(0)); 
 	int i,j;
 	for(i = 0; i < size; i++)
 		for(j=0 ; j< size; j++)
 		 	*(arr + i*size +j) = rand()%100;
 	return arr;
 }
+
 
 void menu(int* arr,int size)
 {
@@ -128,6 +142,91 @@ int* moveHorizontal(int* arr, int size)
 		}
 	return arr;
 }
+int* setArrayForNumGame(int* arr,int size)
+{
+	int i;
+	for(i = 0; i < size-1; i++)
+		 *(arr+i) = i+1;
+	*(arr+size-1)=0;
+	
+	return arr;
+	
+}
+int* shuffleArray(int* arr,int n,int m,int* zeroIndex)
+{	
+	int dice;
+	int invalidMove;
+	do{
+		
+		dice=rand() % 100;
+		
+		if(dice<25){
+			invalidMove=moveUp(arr,m,zeroIndex);
+			printf("up");
+			}
+		else if(dice<50){
+			invalidMove=moveDown(arr,n,m,zeroIndex);
+			printf("down");
+			}
+		else if(dice<75){
+			invalidMove=moveRight(arr,n,m,zeroIndex);
+			printf("Right");
+			}
+		else if(dice<100){
+			invalidMove=moveLeft(arr,n,m,zeroIndex); 
+			printf("Left");
+			}
+	}
+	while (!invalidMove);	
+	return arr;
+}
+int moveUp(int* arr,int m,int* zeroIndex){ 
+	int tempIndex=*zeroIndex-m;
+	if(*zeroIndex>0&&*zeroIndex<m)
+		return 0;
+	
+	swap((arr+(*zeroIndex)),(arr+(*zeroIndex-m)));
+	*zeroIndex=tempIndex;
+	
+	return 1;	
+}
+int moveDown(int* arr,int n,int m,int* zeroIndex){ 
+	int tempIndex=*zeroIndex+m;
+	if(*zeroIndex>((n*m)-m)&&*zeroIndex<n*m)
+		return 0;
+	
+	swap((arr+(*zeroIndex)),(arr+(*zeroIndex+m)));
+	*zeroIndex=tempIndex;
+	
+	return 1;	
+}
+int moveRight(int* arr,int n,int m,int* zeroIndex){ 
+	int tempIndex=*zeroIndex+1;
+	for(int i=1; i<=n;i++)
+	{
+		if(!(*(arr+(m*i-1))))
+			return 0;
+	}
+	
+	
+	swap((arr+(*zeroIndex)),(arr+(*zeroIndex+1)));
+	*zeroIndex=tempIndex;
+	
+	return 1;	
+}
+int moveLeft(int* arr,int n,int m,int* zeroIndex){ 
+	int tempIndex=*zeroIndex-1;
+	for(int i=0; i<n;i++)
+	{
+		if(!(*(arr+(m*i))))
+			return 0;
+	}
+	
+	swap((arr+(*zeroIndex)),(arr+(*zeroIndex)-1));
+	*zeroIndex=tempIndex;
+	
+	return 1;	
+}
 
 void swap(int* a, int* b)
 {
@@ -135,4 +234,6 @@ void swap(int* a, int* b)
 	*a = *b;
 	*b= temp;
 }
+
+
 
