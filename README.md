@@ -1,1 +1,1 @@
-# Assaignment1-in-C
+# Assignment1-in-C
