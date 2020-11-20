@@ -5,6 +5,8 @@
 
 #include "functions.h"
 
+#define SHUFFLE_TIMES 3
+
 void printArr(int* arr,int size)
 {
 	for(int i = 0; i < size; i++)
@@ -162,19 +164,19 @@ int* shuffleArray(int* arr,int n,int m,int* zeroIndex)
 		
 		if(dice<25){
 			invalidMove=moveUp(arr,m,zeroIndex);
-			printf("up");
+			//printf("up");
 			}
 		else if(dice<50){
 			invalidMove=moveDown(arr,n,m,zeroIndex);
-			printf("down");
+			//printf("down");
 			}
 		else if(dice<75){
 			invalidMove=moveRight(arr,n,m,zeroIndex);
-			printf("Right");
+			//printf("Right");
 			}
 		else if(dice<100){
 			invalidMove=moveLeft(arr,n,m,zeroIndex); 
-			printf("Left");
+			//printf("Left");
 			}
 	}
 	while (!invalidMove);	
@@ -202,12 +204,8 @@ int moveDown(int* arr,int n,int m,int* zeroIndex){
 }
 int moveRight(int* arr,int n,int m,int* zeroIndex){ 
 	int tempIndex=*zeroIndex+1;
-	for(int i=1; i<=n;i++)
-	{
-		if(!(*(arr+(m*i-1))))
-			return 0;
-	}
-	
+	if(checkRight(arr,n,m,0))
+		return 0;
 	
 	swap((arr+(*zeroIndex)),(arr+(*zeroIndex+1)));
 	*zeroIndex=tempIndex;
@@ -216,16 +214,97 @@ int moveRight(int* arr,int n,int m,int* zeroIndex){
 }
 int moveLeft(int* arr,int n,int m,int* zeroIndex){ 
 	int tempIndex=*zeroIndex-1;
-	for(int i=0; i<n;i++)
-	{
-		if(!(*(arr+(m*i))))
-			return 0;
-	}
+	if(checkLeft(arr,n,m,0))
+		return 0;
 	
 	swap((arr+(*zeroIndex)),(arr+(*zeroIndex)-1));
 	*zeroIndex=tempIndex;
 	
 	return 1;	
+}
+int checkLeft(int* arr,int n,int m,int num) {
+	for(int i=0; i<n;i++)
+	{
+		if((*(arr+(m*i)))==num)
+			return 1;
+	}
+	return 0;
+}
+int checkRight(int* arr,int n,int m,int num) {
+	for(int i=0; i<n;i++)
+	{
+		if((*(arr+((m*i)-1))==num))
+			return 1;
+	}
+	return 0;
+}
+
+
+void runGame(int* arr,int n,int m,int* zeroIndex){
+	int numToSwitch;
+	int checkWin=0;
+	arr=setArrayForNumGame(arr,n*m);
+	//printf("STOP SIGN");
+	for(int i=0;i<SHUFFLE_TIMES;i++)
+	{
+	arr=shuffleArray(arr,n,m,zeroIndex);
+	}
+	printMatrix(arr,n,m);
+	printf("Welcome to the Number-Game \n In each step, you choose a number that is near the '0',\n in order to get the 0 into the bottom right corner with all the numbers are set by order\n");
+	while(!checkWin)
+	{
+		printf("Your Step:\n");
+		do{
+			scanf("%d",&numToSwitch);
+
+		}while(isspace(numToSwitch));
+		int validStep=moveZeroToNum(arr,n,m,zeroIndex,numToSwitch);
+		printf("valid Step = %d \n",validStep);
+		if(!validStep)
+		{	
+			printf("0:%d \n",*zeroIndex);
+			printf("Invalid Step!\n");
+		} 
+		else 
+		{
+			printf("0:%d \n",*zeroIndex);
+			printMatrix(arr,n,m);
+			checkWin=checkGameOver(arr,n*m);
+		}
+	
+	}
+
+}
+int moveZeroToNum(int* arr,int n,int m,int* zeroIndex,int num){
+	if(num>=n*m||num<=0)
+		return 0;
+	int numIndex = Search(arr,n*m,num);
+	printf("the required number index : %d \n",numIndex);
+	int check= *zeroIndex - numIndex;
+	int left=checkLeft(arr,n,m,0);
+	int right=checkRight(arr,n,m,0);
+	if((check==1&&!left)||(check==-1&&!right)||check==m||check==-m)
+	{
+		swap(arr+(*zeroIndex),arr+numIndex);
+		*zeroIndex=numIndex;
+		return 1;
+	}  
+	return 0;
+	
+
+}
+int checkGameOver(int* arr,int size){
+	for(int i=0;i<size-1;i++)
+	{
+		if(*(arr+i)!=i+1)
+			return 0;
+	}
+	if(*(arr+size-1))
+	{
+		printf("Congrationlations! YOU ARE A GENIUS ! YOU WON !");
+		return 1;
+	}
+	return 0;
 }
 
 void swap(int* a, int* b)
@@ -233,6 +312,14 @@ void swap(int* a, int* b)
 	int temp = *a;
 	*a = *b;
 	*b= temp;
+}
+int Search(int* arr, int size, int find) {
+  	for(int i=0;i<size;i++)
+  	{
+  		if(*(arr+i)==find)
+  			return i;
+  	}
+  	return -1;	
 }
 
 

@@ -6,7 +6,7 @@
 #include "exe.h"
 #include "functions.h"
 
-#define SHUFFLE_TIMES 10
+
 
 void pictureManipulation()
 {
@@ -34,23 +34,51 @@ void numberGame()
 		scanf("%d",&m);
 	}while(isspace(m) || m<0);
 	
-	int size=n*m;
 	int arr[n][m];
 	int *pointerArr = &arr[0][0];
 	int zeroIndex=n*m-1;
-	pointerArr=setArrayForNumGame(pointerArr,size);
-	//printf("STOP SIGN");
-	for(int i=0;i<SHUFFLE_TIMES;i++)
+	runGame(pointerArr,n,m,&zeroIndex);
+	
+	printf("That Was The Number Game!!\n");
+}
+void recursion (int n)
+{
+	int arr[n];
+	int counter=0;
+	recHelper(n,&arr[0],0,&counter);
+	printf("Number of sub-Groups are:%d",counter);
+
+}
+
+void recHelper(int n,int* arr,int index,int* counter) // !0 = true 0 = false;
+{
+	if(!n)
 	{
-	pointerArr=shuffleArray(pointerArr,n,m,&zeroIndex);
-	printMatrix(pointerArr,n,m);
+		print2DArr(arr,index);
+		(*counter)++;
+		return ;
 	}
-	
-	
-	
-	//runGame(n,m);
-	
-	printf("numberGame!\n");
+	if(n<0)
+		return;
+	for(int i=1;i<=n;i++)
+	{
+		*(arr+index)=i;
+		recHelper(n-i,arr,index+1,counter);
+	}
+
+}
+
+void print2DArr(int* arr,int length)
+{
+	printf("[");
+	for(int i=0;i<length;i++)
+	{
+		printf("%d",*(arr+i));
+		if(i!=length-1)
+			printf(",");
+	}
+	printf("]\n");
+
 }
 
 
