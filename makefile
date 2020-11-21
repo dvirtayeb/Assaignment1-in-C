@@ -1,6 +1,6 @@
 CC= gcc
 OBJS= functions.o Program.o exe.o
-EXEC= assginment
+EXEC= assignment
 DEBUG= -g
 CFLAGS= -std=c99 -Wall -Werror $(DEBUG)
 
