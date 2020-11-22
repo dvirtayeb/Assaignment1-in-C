@@ -3,7 +3,6 @@
 #include "exe.h"
 
 int main() {
-	//recursion(4);
 	char n;
 	do
 	{

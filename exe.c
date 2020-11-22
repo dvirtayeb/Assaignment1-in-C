@@ -5,7 +5,7 @@
 
 #include "exe.h"
 #include "functions.h"
-
+#include "functions2.h"
 
 
 void pictureManipulation()
@@ -18,7 +18,7 @@ void pictureManipulation()
 	int arr[n][n];
 	int *pointerArr = &arr[0][0];
 	pointerArr = setArray(pointerArr,n);
-	printArr(pointerArr,n);
+	printMatrix(pointerArr,n,n);
 	menu(pointerArr, n);
 }
 void numberGame()
@@ -41,44 +41,6 @@ void numberGame()
 	
 	printf("That Was The Number Game!!\n");
 }
-void recursion (int n)
-{
-	int arr[n];
-	int counter=0;
-	recHelper(n,&arr[0],0,&counter);
-	printf("Number of sub-Groups are:%d",counter);
 
-}
-
-void recHelper(int n,int* arr,int index,int* counter) // !0 = true 0 = false;
-{
-	if(!n)
-	{
-		print2DArr(arr,index);
-		(*counter)++;
-		return ;
-	}
-	if(n<0)
-		return;
-	for(int i=1;i<=n;i++)
-	{
-		*(arr+index)=i;
-		recHelper(n-i,arr,index+1,counter);
-	}
-
-}
-
-void print2DArr(int* arr,int length)
-{
-	printf("[");
-	for(int i=0;i<length;i++)
-	{
-		printf("%d",*(arr+i));
-		if(i!=length-1)
-			printf(",");
-	}
-	printf("]\n");
-
-}
 
 
