@@ -3,8 +3,6 @@
 
 void pictureManipulation();
 void numberGame();
-void recursion (int n);
-void recHelper(int n,int* arr,int index,int* counter);
-void print2DArr(int* arr,int length);
+
 
 #endif
